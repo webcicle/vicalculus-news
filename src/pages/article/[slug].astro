@@ -1,0 +1,21 @@
+---
+import groq from 'groq';
+import client from '../../client/sanity';
+
+export async function getStaticPaths() {
+	const postQuery = groq`*[_type == 'post'] {"slug": slug.current}`;
+	const posts = await client.fetch(postQuery);
+
+	const slugArray = posts.map((post: any) => {
+		return {
+			params: { slug: post.slug },
+		};
+	});
+
+	return slugArray;
+}
+
+const { slug } = Astro.params;
+---
+
+<h2>Dynamic slug for: {slug}</h2>
