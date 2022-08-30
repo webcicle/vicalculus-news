@@ -1,0 +1,139 @@
+---
+import { Image, Picture } from '@astrojs/image/components';
+const MD_SIZE = 400;
+---
+
+<>
+	<header class='flex header'>
+		<div class='grid banner'>
+			<img
+				class='banner-img'
+				src='/banner/webp/banner-xl.webp'
+				alt=''
+				srcset='/banner/webp/banner-mobile.webp 390w, /banner/webp/banner-tablet.webp 834w, /banner/webp/banner-desktop.webp 1280w, /banner/webp/banner-xl.webp 1920w'
+			/>
+			<h1 class='banner-title'>vicalculus news</h1>
+		</div>
+		<nav class='navbar'>
+			<div class='flex nav-inner'>
+				<ul class='flex nav-links'>
+					<li><a href='/' class='nav-link'>home</a></li>
+					<li><a href='/categories' class='nav-link'>categories</a></li>
+				</ul>
+				<form action='' class='search-form'>
+					<input type='text' class='search-input' placeholder='Search' />
+				</form>
+			</div>
+		</nav>
+	</header>
+</>
+
+<style>
+	.header {
+		--x-spacing: 0.2em;
+
+		max-width: 100vw;
+		flex-direction: column;
+	}
+
+	.banner {
+		width: 100%;
+		height: fit-content;
+		grid-template-columns: 1fr;
+	}
+
+	.banner-img {
+		height: auto;
+		width: 100%;
+		display: block;
+		grid-column: 1/-1;
+		grid-row: 1/-1;
+	}
+
+	.banner-title {
+		grid-column: 1/-1;
+		grid-row: 1/-1;
+		align-self: flex-end;
+		text-transform: uppercase;
+		color: var(--color-white);
+		text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		font-weight: 400;
+		font-size: var(--step-4);
+		text-align: center;
+	}
+
+	.navbar {
+		background: var(--main-gradient);
+	}
+
+	.nav-inner {
+		padding: 0.6em var(--x-spacing);
+		gap: 0.3em;
+		flex-direction: column;
+	}
+
+	.nav-links {
+		justify-content: space-between;
+	}
+
+	.nav-link {
+		text-transform: uppercase;
+		color: var(--color-white);
+		cursor: pointer;
+	}
+
+	.nav-link:hover {
+		color: var(--color-white-hover);
+	}
+
+	.search-form {
+		width: 100%;
+	}
+
+	.search-input {
+		width: 100%;
+		border: none;
+		padding: 0.2em 0.6em;
+		border-radius: 2rem;
+		font-family: var(--main-font);
+	}
+
+	@media (min-width: 400px) {
+		.navbar {
+		}
+
+		.nav-inner {
+			flex-direction: row;
+			width: 100%;
+			justify-content: space-between;
+			max-width: 900px;
+			margin-inline: auto;
+		}
+
+		.nav-links {
+			gap: 1em;
+		}
+
+		.search-form {
+			width: auto;
+		}
+		.search-input {
+			width: 3.5rem;
+			transition: width 200ms ease-in;
+		}
+
+		.search-input:focus {
+			width: clamp(50px, 25vw, 200px);
+			outline: none;
+		}
+	}
+
+	@media (min-width: 720px) {
+		.banner-title {
+			text-align: left;
+		}
+		.nav-inner {
+			max-width: 1190px;
+		}
+	}
+</style>

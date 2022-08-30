@@ -5,9 +5,20 @@
 	--font-size-lg: clamp(1.2rem, 0.7vw + 1.2rem, 1.5rem);
 	--font-size-xl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
 
-	--color-text: hsl(12, 5%, 4%);
+	--main-font: 'Playfair Display', serif;
+
+	--main-blue: hsl(223, 31%, 33%);
+	--color-text: hsl(222, 19%, 20%);
 	--color-bg: hsl(10, 21%, 95%);
 	--color-border: hsl(17, 24%, 90%);
+	--main-gradient: linear-gradient(
+		270deg,
+		#222325 0%,
+		#2a303e 33.67%,
+		#3a496f 101.54%
+	);
+	--color-white: #faf7f7;
+	--color-white-hover: #d4d0d0;
 
 	/* UTOPIA FLUID TYPES */
 	--step--2: clamp(0.61rem, calc(0.44rem + 0.84vw), 1.04rem);
@@ -18,10 +29,22 @@
 	--step-3: clamp(1.51rem, calc(0.86rem + 3.24vw), 3.17rem);
 	--step-4: clamp(1.81rem, calc(0.97rem + 4.2vw), 3.97rem);
 	--step-5: clamp(2.18rem, calc(1.09rem + 5.43vw), 4.96rem);
+
+	/* SCREEN SIZES */
+	--mobile-screen: 400px;
+	--tablet-screen: 720px;
+	--desktop-screen: 1180px;
+	--xl-screen: 1400px;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
 }
 
 html {
-	font-family: 'Playfair Display', serif;
+	font-family: var(--main-font);
 	font-size: var(--font-size-base);
 	color: var(--color-text);
 	background-color: var(--color-bg);
@@ -29,7 +52,6 @@ html {
 
 body {
 	margin: 0;
-	box-sizing: border-box;
 }
 
 h1,
@@ -41,8 +63,28 @@ h6,
 p,
 li,
 ul,
-a {
+a,
+input {
 	margin: 0;
+	padding: 0;
+}
+
+ul,
+ol {
+	list-style: none;
+	padding-left: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+.flex {
+	display: flex;
+}
+
+.grid {
+	display: grid;
 }
 
 :global(h1) {
