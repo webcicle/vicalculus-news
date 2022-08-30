@@ -11,7 +11,7 @@ const infoProps = { publishedAt, author, categories };
 <article class='grid article-preview'>
 	<div class='img-container'>
 		<img
-			src={urlFor(mainImg).maxHeight(250).url()}
+			src={urlFor(mainImg).maxHeight(250).format('webp').quality(1).url()}
 			alt={title}
 			class='preview-img'
 		/>

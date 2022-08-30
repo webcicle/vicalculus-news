@@ -3,10 +3,10 @@ import groq from 'groq';
 import client from '../../client/sanity';
 
 export async function getStaticPaths() {
-	const postQuery = groq`*[_type == 'post'] {"slug": slug.current}`;
-	const posts = await client.fetch(postQuery);
+	const slugsQuery = groq`*[_type == 'post'] {"slug": slug.current}`;
+	const postsWithSlugs = await client.fetch(slugsQuery);
 
-	const slugArray = posts.map((post: any) => {
+	const slugArray = postsWithSlugs.map((post: any) => {
 		return {
 			params: { slug: post.slug },
 		};
