@@ -70,6 +70,9 @@ const MD_SIZE = 400;
 		padding: 0.6em var(--x-spacing);
 		gap: 0.3em;
 		flex-direction: column;
+		margin-inline: auto;
+
+		width: var(--max-width-uni);
 	}
 
 	.nav-links {
@@ -99,15 +102,9 @@ const MD_SIZE = 400;
 	}
 
 	@media (min-width: 400px) {
-		.navbar {
-		}
-
 		.nav-inner {
 			flex-direction: row;
-			width: 100%;
 			justify-content: space-between;
-			max-width: 900px;
-			margin-inline: auto;
 		}
 
 		.nav-links {
@@ -131,9 +128,6 @@ const MD_SIZE = 400;
 	@media (min-width: 720px) {
 		.banner-title {
 			text-align: left;
-		}
-		.nav-inner {
-			max-width: 1190px;
 		}
 	}
 </style>
