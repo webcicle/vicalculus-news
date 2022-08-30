@@ -1,0 +1,32 @@
+---
+const isSmall = Astro.props.small;
+const { publishedAt, author, categories } = Astro.props.props;
+---
+
+<div class='flex info-container'>
+	<div class='data-point'>
+		<p>by: {author}</p>
+	</div>
+	<div class='data-point'>
+		<p>{publishedAt.split('T')[0]}</p>
+	</div>
+	<div class='data-point'>
+		<p>{categories[0]}</p>
+	</div>
+</div>
+
+<style>
+	.info-container {
+		width: 95%;
+		justify-content: space-between;
+		align-items: center;
+		margin-block: 0.3em;
+		background: var(--main-gradient);
+	}
+
+	.data-point {
+		color: var(--color-white);
+		padding: 0.2em 0.4em;
+		font-size: var(--step-0);
+	}
+</style>

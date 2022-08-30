@@ -1,12 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import client from '../client/sanity';
+import groq from 'groq';
+import ArticlePreview from '../components/ArticlePreview.astro';
 
-const postQuery = '*[_type == "post"]';
-const posts = client.fetch(postQuery);
-console.log(posts);
+const postQuery = groq`*[_type == "post"]{
+  publishedAt,
+  summary,
+  _id,
+  "author": author->name,
+  "categories": categories[]->title,
+  "mainImg": mainImage,
+  "slug": slug.current,
+  title,
+}`;
+const posts = await client.fetch(postQuery);
 ---
 
-<Layout title='Welcome to Astro.'>
-	<h1>HOME</h1>
+<Layout title='Vicalculus News - Mostly opinions'>
+	{
+		posts.map((post: any) => {
+			return <ArticlePreview post={post} />;
+		})
+	}
 </Layout>
