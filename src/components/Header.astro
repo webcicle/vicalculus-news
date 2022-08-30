@@ -37,6 +37,7 @@ const MD_SIZE = 400;
 	}
 
 	.banner {
+		position: relative;
 		width: 100%;
 		height: fit-content;
 		grid-template-columns: 1fr;
@@ -48,6 +49,19 @@ const MD_SIZE = 400;
 		display: block;
 		grid-column: 1/-1;
 		grid-row: 1/-1;
+	}
+
+	.banner-img::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		inset: 0;
+		background: linear-gradient(
+			360deg,
+			rgba(26, 26, 26, 0.2) 0%,
+			rgba(26, 26, 26, 0) 52.6%
+		);
 	}
 
 	.banner-title {
