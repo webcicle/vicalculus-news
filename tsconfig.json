@@ -1,7 +1,7 @@
 {
 	"extends": "astro/tsconfigs/strict",
 	"include": ["**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules", "studio"],
 	"compilerOptions": {
 		"types": ["astro/client"],
 		"target": "ESNext",

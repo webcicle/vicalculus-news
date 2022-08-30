@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import client from '../client/sanity';
+
+const postQuery = '*[_type == "post"]';
+const posts = client.fetch(postQuery);
+console.log(posts);
 ---
 
 <Layout title='Welcome to Astro.'>
