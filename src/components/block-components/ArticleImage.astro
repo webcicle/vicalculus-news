@@ -2,31 +2,70 @@
 import { urlFor } from '../../client/builders';
 
 const { astroClass, node } = Astro.props;
+
+console.log(astroClass);
 ---
 
-<img
-	class={`article-img ${astroClass}`}
-	src={urlFor(node).quality(100).format('webp').url()}
-/>
+<div class='img-container'>
+	<img
+		class={`article-img ${astroClass}`}
+		src={urlFor(node).quality(100).format('webp').url()}
+		alt={node.altText ?? `Image related to article (alt text missing, sorry)`}
+	/>
+	<p class='caption'>{node.caption}</p>
+</div>
 
 <style>
 	.article-img {
 		width: 100%;
-		padding: 1rem;
-		object-fit: cover;
-		object-position: center;
+		object-fit: contain;
+	}
+
+	.img-container {
+		height: auto;
+
+		display: flex;
+		flex-direction: column;
+		padding-right: 1rem;
+		padding-top: 0.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.caption {
+		font-style: italic;
+		font-size: var(--step--2);
+		text-align: center;
+		padding-top: 0.4em;
 	}
 
 	@media (min-width: 400px) {
 		.article-img {
-			width: clamp(12rem, 50%, 100%);
+			object-fit: cover;
+			margin-bottom: 0rem;
+		}
+	}
+
+	@media (min-width: 650px) {
+		.article-img {
 			aspect-ratio: 1/1;
 		}
-		.article-img:nth-child(1n) {
+		.img-container {
+			width: clamp(12rem, 50%, 100%);
+		}
+		.img-container:nth-child(1n) {
 			float: right;
 		}
-		.article-img:nth-child(2n) {
+		.img-container:nth-child(2n) {
 			float: left;
+		}
+	}
+
+	@media (min-width: 720px) {
+		.article-img {
+			aspect-ratio: 16/11;
+		}
+		.img-container {
+			width: clamp(12rem, 40%, 100%);
 		}
 	}
 </style>
