@@ -84,11 +84,11 @@ console.log(Astro.props.post);
 >
 	<img
 		class='main-img'
-		src={urlFor(mainImg).quality(50).format('webp').url()}
+		src={urlFor(mainImg).quality(10).format('webp').url()}
 	/>
 
 	<div class={`content-center`}>
-		<h1>{title}</h1>
+		<h1 class='main-heading'>{title}</h1>
 	</div>
 	<ArticleInfo props={{ publishedAt, author, categories }} />
 	<div class={`content-center`}>
@@ -97,6 +97,10 @@ console.log(Astro.props.post);
 </Layout>
 
 <style>
+	.main-heading {
+		font-size: var(--step-4);
+		margin-bottom: 0.4em;
+	}
 	.img-container {
 		max-width: 100%;
 		max-height: 250px;
