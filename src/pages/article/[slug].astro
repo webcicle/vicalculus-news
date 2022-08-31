@@ -1,21 +1,118 @@
 ---
+import type { SanityAssetDocument } from '@sanity/client';
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types';
 import groq from 'groq';
+import { urlFor } from '../../client/builders';
 import client from '../../client/sanity';
+import ArticleInfo from '../../components/ArticleInfo.astro';
+import Layout from '../../layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
+import myPortableTextComponents from './htmlComponents';
+
+interface SinglePostProps {
+	publishedAt: string;
+	_id: string;
+	author: string;
+	categories: string[];
+	mainImg: SanityImageObject;
+	slug: string;
+	title: string;
+	body: SanityAssetDocument;
+}
 
 export async function getStaticPaths() {
-	const slugsQuery = groq`*[_type == 'post'] {"slug": slug.current}`;
+	const slugsQuery = groq`*[_type == 'post'] {
+      publishedAt,
+      _id,
+      "author": author->name,
+      "categories": categories[]->title,
+      "mainImg": mainImage,
+      "slug": slug.current,
+      title,
+      body
+   }`;
+
 	const postsWithSlugs = await client.fetch(slugsQuery);
 
-	const slugArray = postsWithSlugs.map((post: any) => {
+	const slugArray = postsWithSlugs.map((post: SinglePostProps) => {
 		return {
 			params: { slug: post.slug },
+			props: { post },
 		};
 	});
 
 	return slugArray;
 }
 
-const { slug } = Astro.params;
+const { publishedAt, author, categories, mainImg, title, body } =
+	Astro.props.post;
 ---
 
-<h2>Dynamic slug for: {slug}</h2>
+<Layout title={`${title} | Vicalculus News`}>
+	<img
+		class='main-img'
+		src={urlFor(mainImg).quality(50).format('webp').url()}
+	/>
+
+	<div class={`content-center`}>
+		<h1>{title}</h1>
+	</div>
+	<ArticleInfo props={{ publishedAt, author, categories }} />
+	<div class={`content-center`}>
+		<PortableText value={body} components={myPortableTextComponents} />
+	</div>
+</Layout>
+
+<style>
+	.img-container {
+		max-width: 100%;
+		max-height: 250px;
+		margin: 0.5em;
+		position: relative;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+
+	.main-img {
+		width: 100%;
+		max-height: 200px;
+		object-fit: cover;
+		align-self: center;
+	}
+
+	.content-center {
+		padding-inline: 1rem;
+	}
+
+	.image {
+		width: 100%;
+		max-height: 100%;
+		display: block;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.link {
+		color: var(--color-text);
+		cursor: pointer;
+	}
+	.link:hover {
+		color: var(--main-blue);
+	}
+
+	.paragraph {
+		font-size: var(--step-0);
+		padding-right: 1em;
+		color: red;
+	}
+
+	@media (max-width: 720px) {
+		.img-container {
+			margin: 0em;
+		}
+		.paragraph {
+			font-size: var(--step-0);
+			padding-right: 0em;
+		}
+	}
+</style>

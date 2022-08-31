@@ -1,0 +1,13 @@
+---
+const { astroClass } = Astro.props;
+---
+
+<h4 class={`heading-four ${astroClass}`}><slot /></h4>
+
+<style>
+	.heading-four {
+		color: var(--color-text);
+		font-size: var(--step-1);
+		margin-bottom: var(--heading-space-400);
+	}
+</style>

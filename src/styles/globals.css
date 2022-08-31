@@ -9,6 +9,7 @@
 
 	--main-blue: hsl(223, 31%, 33%);
 	--color-text: hsl(222, 19%, 20%);
+	--color-quote: hsl(222, 9%, 30%);
 	--color-bg: hsl(0, 0%, 93%);
 	--color-border: hsl(17, 24%, 90%);
 	--main-gradient: linear-gradient(
@@ -35,6 +36,7 @@
 	/* SPACING */
 
 	--max-width-uni: clamp(100px, 95vw, 1000px);
+	--heading-space-400: 0.2em;
 
 	/* SCREEN SIZES */
 	--mobile-screen: 400px;

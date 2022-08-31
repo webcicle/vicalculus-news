@@ -1,0 +1,29 @@
+---
+const { astroClass } = Astro.props;
+---
+
+<blockquote class={`blockquote ${astroClass}`}><slot /></blockquote>
+
+<style>
+	.blockquote {
+		--quote-offset: -1.5rem;
+		font-style: italic;
+		position: relative;
+		color: var(--color-quote);
+	}
+
+	.blockquote::before {
+		content: '"';
+		font-size: var(--step-5);
+		position: absolute;
+		top: var(--quote-offset);
+		left: var(--quote-offset);
+	}
+	.blockquote::after {
+		content: '"';
+		font-size: var(--step-5);
+		position: absolute;
+		bottom: var(--quote-offset);
+		right: 0;
+	}
+</style>

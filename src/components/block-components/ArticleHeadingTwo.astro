@@ -1,0 +1,13 @@
+---
+const { astroClass } = Astro.props;
+---
+
+<h2 class={`heading-two ${astroClass}`}><slot /></h2>
+
+<style>
+	.heading-two {
+		color: var(--color-text);
+		font-size: var(--step-3);
+		margin-bottom: var(--heading-space-400);
+	}
+</style>

@@ -1,0 +1,14 @@
+---
+const { astroClass } = Astro.props;
+---
+
+<p class={`paragraph ${astroClass}`}><slot /></p>
+
+<style>
+	.paragraph {
+		color: var(--color-text);
+		font-size: var(--step-0);
+		margin-bottom: 0.6em;
+		padding-right: 0em;
+	}
+</style>

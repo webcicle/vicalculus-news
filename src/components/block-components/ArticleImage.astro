@@ -1,0 +1,32 @@
+---
+import { urlFor } from '../../client/builders';
+
+const { astroClass, node } = Astro.props;
+---
+
+<img
+	class={`article-img ${astroClass}`}
+	src={urlFor(node).quality(100).format('webp').url()}
+/>
+
+<style>
+	.article-img {
+		width: 100%;
+		padding: 1rem;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	@media (min-width: 400px) {
+		.article-img {
+			width: clamp(12rem, 50%, 100%);
+			aspect-ratio: 1/1;
+		}
+		.article-img:nth-child(1n) {
+			float: right;
+		}
+		.article-img:nth-child(2n) {
+			float: left;
+		}
+	}
+</style>

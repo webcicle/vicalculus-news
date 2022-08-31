@@ -11,12 +11,17 @@
 	},
 	"devDependencies": {
 		"@types/node": "^18.7.14",
+		"@types/vhtml": "^2.2.4",
 		"astro": "^1.1.1"
 	},
 	"dependencies": {
 		"@astrojs/image": "^0.3.6",
+		"@portabletext/types": "^1.0.3",
 		"@sanity/client": "^3.3.6",
 		"@sanity/image-url": "^1.0.1",
-		"groq": "^2.29.3"
+		"astro-portabletext": "^0.3.0",
+		"groq": "^2.29.3",
+		"htm": "^3.1.1",
+		"vhtml": "^2.2.0"
 	}
 }
