@@ -10,17 +10,18 @@ const { astroClass } = Astro.props;
 		font-style: italic;
 		position: relative;
 		color: var(--color-quote);
+		margin-block: 1.6em;
 	}
 
 	.blockquote::before {
-		content: '"';
+		content: '“';
 		font-size: var(--step-5);
 		position: absolute;
 		top: var(--quote-offset);
 		left: var(--quote-offset);
 	}
 	.blockquote::after {
-		content: '"';
+		content: '”';
 		font-size: var(--step-5);
 		position: absolute;
 		bottom: var(--quote-offset);

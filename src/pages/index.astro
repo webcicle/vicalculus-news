@@ -15,9 +15,18 @@ const postQuery = groq`*[_type == "post"]{
   title,
 }`;
 const posts = await client.fetch(postQuery);
+
+const frontPageMetaData = {
+	meta_description: 'News, opinions, and articles focusing on the West',
+	meta_title: 'Vicalculus News',
+	og_description: 'News, opinions, and articles focusing on the West',
+	og_image: posts[0].mainImg,
+	og_title: 'Vicalculus News - F*CK MSM',
+	og_type: 'article',
+};
 ---
 
-<Layout title='Vicalculus News - Mostly opinions'>
+<Layout title='Vicalculus News - Mostly opinions' metaData={frontPageMetaData}>
 	{
 		posts.map((post: any) => {
 			return <ArticlePreview post={post} />;

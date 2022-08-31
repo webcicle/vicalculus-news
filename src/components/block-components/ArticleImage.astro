@@ -2,8 +2,6 @@
 import { urlFor } from '../../client/builders';
 
 const { astroClass, node } = Astro.props;
-
-console.log(astroClass);
 ---
 
 <div class='img-container'>
@@ -26,7 +24,6 @@ console.log(astroClass);
 
 		display: flex;
 		flex-direction: column;
-		padding-right: 1rem;
 		padding-top: 0.5rem;
 		margin-bottom: 1rem;
 	}
@@ -52,11 +49,13 @@ console.log(astroClass);
 		.img-container {
 			width: clamp(12rem, 50%, 100%);
 		}
-		.img-container:nth-child(1n) {
+		.img-container:nth-child(even) {
 			float: right;
+			padding-left: 1rem;
 		}
-		.img-container:nth-child(2n) {
+		.img-container:nth-child(odd) {
 			float: left;
+			padding-right: 1rem;
 		}
 	}
 
@@ -65,7 +64,7 @@ console.log(astroClass);
 			aspect-ratio: 16/11;
 		}
 		.img-container {
-			width: clamp(12rem, 40%, 100%);
+			width: clamp(12rem, 45%, 100%);
 		}
 	}
 </style>

@@ -2,21 +2,60 @@
 import Header from '../components/Header.astro';
 import InnerWrapper from './InnerWrapper.astro';
 import '../styles/globals.css';
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types';
+import { urlFor } from '../client/builders';
+
+export interface MetaData {
+	meta_title: string;
+	meta_description: string;
+	og_title: string;
+	og_type: string;
+	og_description: string;
+	og_image: SanityImageObject;
+	canonical_url?: string;
+}
 export interface Props {
 	title: string;
+	metaData?: MetaData;
+	slug?: string;
 }
 
-const { title } = Astro.props;
+const { title, metaData, slug } = Astro.props as Props;
+
+const {
+	meta_title,
+	meta_description,
+	og_description,
+	og_image,
+	og_title,
+	og_type,
+} = metaData as MetaData;
+
+// console.log(metaData);
 ---
 
 <!DOCTYPE html>
 <html lang='en'>
 	<head>
 		<meta charset='UTF-8' />
-		<meta name='viewport' content='width=device-width' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>{meta_title ?? title}</title>
+		<link
+			rel='canonical'
+			href={`${import.meta.env.PUBLIC_CANONICAL_URL}/${slug}`}
+		/>
+		<meta name='description' content={meta_description ?? ''} />
+		<meta property='og:title' content={og_title ?? meta_title} />
+		<meta
+			property='og:url'
+			content={`${import.meta.env.PUBLIC_CANONICAL_URL}/${slug}`}
+		/>
+		<meta property='og:type' content={og_type ?? 'article'} />
+		<meta property='og:description' content={og_description ?? ''} />
+		<meta property='og:image' content={urlFor(og_image).quality(1).url()} />
+		<meta name='theme-color' content='blue' />
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<meta name='generator' content={Astro.generator} />
-		<title>{title}</title>
 	</head>
 	<body>
 		<Header />

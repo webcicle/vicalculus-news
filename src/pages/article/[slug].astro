@@ -8,6 +8,7 @@ import ArticleInfo from '../../components/ArticleInfo.astro';
 import Layout from '../../layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
 import myPortableTextComponents from '../../client/htmlComponents';
+import { log } from 'console';
 
 interface SinglePostProps {
 	publishedAt: string;
@@ -29,7 +30,13 @@ export async function getStaticPaths() {
       "mainImg": mainImage,
       "slug": slug.current,
       title,
-      body
+      body,
+      meta_description,
+      meta_title,
+      og_description,
+      og_image,
+      og_title,
+      og_type,
    }`;
 
 	const postsWithSlugs = await client.fetch(slugsQuery);
@@ -44,11 +51,37 @@ export async function getStaticPaths() {
 	return slugArray;
 }
 
-const { publishedAt, author, categories, mainImg, title, body } =
-	Astro.props.post;
+const {
+	publishedAt,
+	author,
+	categories,
+	mainImg,
+	slug,
+	title,
+	body,
+	meta_description,
+	meta_title,
+	og_description,
+	og_image,
+	og_title,
+	og_type,
+} = Astro.props.post;
+
+console.log(Astro.props.post);
 ---
 
-<Layout title={`${title} | Vicalculus News`}>
+<Layout
+	title={`${title} | Vicalculus News` ?? 'Vicalculus News'}
+	slug={slug}
+	metaData={{
+		meta_description,
+		meta_title,
+		og_description,
+		og_image: og_image ?? mainImg,
+		og_title,
+		og_type,
+	}}
+>
 	<img
 		class='main-img'
 		src={urlFor(mainImg).quality(50).format('webp').url()}
