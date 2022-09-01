@@ -2,11 +2,11 @@
 import YouTube from 'react-youtube';
 import getYouTubeId from 'get-youtube-id';
 
-const { node } = Astro.props;
+const { astroClass, node } = Astro.props;
 const id = getYouTubeId(node.url);
 ---
 
-<div class='video-center'>
+<div class={`video-center ${astroClass}`}>
 	<YouTube videoId={id} client:visible />
 </div>
 
