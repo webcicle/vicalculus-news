@@ -5,10 +5,10 @@ import groq from 'groq';
 import { urlFor } from '../../client/builders';
 import client from '../../client/sanity';
 import ArticleInfo from '../../components/ArticleInfo.astro';
+import ArticleYoutube from '../../components/block-components/ArticleYouTubeEmbed.astro';
 import Layout from '../../layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
 import myPortableTextComponents from '../../client/htmlComponents';
-import { log } from 'console';
 
 interface SinglePostProps {
 	publishedAt: string;
@@ -66,8 +66,6 @@ const {
 	og_title,
 	og_type,
 } = Astro.props.post;
-
-console.log(Astro.props.post);
 ---
 
 <Layout
