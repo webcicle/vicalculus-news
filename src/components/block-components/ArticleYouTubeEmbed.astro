@@ -9,7 +9,7 @@ const id = getYouTubeId(node.url);
 ---
 
 <div class={`video-center ${astroClass}`}>
-	<YouTubeEmbed id={id} client:visible />
+	<YouTubeEmbed id={id} client:load />
 </div>
 
 <style>
