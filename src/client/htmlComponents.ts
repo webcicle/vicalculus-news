@@ -7,7 +7,6 @@ import HeadingFour from '../components/block-components/ArticleHeadingFour.astro
 import Paragraph from '../components/block-components/ArticleParagraph.astro';
 import BlockQuote from '../components/block-components/ArticleBlockQuote.astro';
 import YouTubeEmbed from '../components/block-components/ArticleYouTubeEmbed.astro';
-import type { PortableTextComponents } from 'astro-portabletext';
 
 const myPortableTextComponents = {
 	type: {
@@ -24,4 +23,4 @@ const myPortableTextComponents = {
 	},
 };
 
-export default myPortableTextComponents as Partial<PortableTextComponents>;
+export default myPortableTextComponents;
