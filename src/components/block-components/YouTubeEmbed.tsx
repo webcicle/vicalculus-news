@@ -1,7 +1,7 @@
 import React from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 
-export function YouTubeEmbed({ id }: { id: string }) {
+export default function YouTubeEmbed({ id }: { id: string }) {
 	const onPlayerReady: YouTubeProps['onReady'] = (event) => {
 		// access to player in all event handlers via event.target
 		event.target.pauseVideo();
