@@ -1,23 +1,22 @@
 ---
 import YouTube from 'react-youtube';
 import getYouTubeId from 'get-youtube-id';
+import ReactPlayer from 'react-player';
+import { YouTubeEmbed } from './YouTubeEmbed.tsx';
 
 const { astroClass, node } = Astro.props;
 const id = getYouTubeId(node.url);
 ---
 
 <div class={`video-center ${astroClass}`}>
-	<!-- <YouTube videoId={id} client:visible /> -->
+	<YouTubeEmbed id={id} client:visible />
 </div>
 
 <style>
 	.video-center {
 		position: relative;
-		width: 100%;
-		height: 0;
-		padding-bottom: 56.25%;
-		overflow: hidden;
-		margin-bottom: 50px;
+		width: min-content;
+		margin-inline: auto;
 	}
 
 	.video-center iframe {
