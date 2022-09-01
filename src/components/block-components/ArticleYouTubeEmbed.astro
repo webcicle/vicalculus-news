@@ -6,9 +6,9 @@ const { astroClass, node } = Astro.props;
 const id = getYouTubeId(node.url);
 ---
 
-<!-- <div class={`video-center ${astroClass}`}> -->
-<YouTube videoId={id} client:visible />
-<!-- </div> -->
+<div class={`video-center ${astroClass}`}>
+	<!-- <YouTube videoId={id} client:visible /> -->
+</div>
 
 <style>
 	.video-center {
