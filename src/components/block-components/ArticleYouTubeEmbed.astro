@@ -1,14 +1,13 @@
 ---
-import YouTube from 'react-youtube';
 import getYouTubeId from 'get-youtube-id';
-import { YouTubeEmbed } from './YouTubeEmbed.tsx';
+import YouTubeEmbed from './YouTubeEmbed.jsx';
 
 const { astroClass, node } = Astro.props;
 const id = getYouTubeId(node.url);
 ---
 
 <div class={`video-center ${astroClass}`}>
-	<YouTubeEmbed id={id} client:load />
+	<YouTubeEmbed id={id!} client:load />
 </div>
 
 <style>

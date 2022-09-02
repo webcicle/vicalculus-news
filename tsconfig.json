@@ -1,6 +1,6 @@
 {
 	"extends": "astro/tsconfigs/strict",
-	"include": ["**/*.ts", "**/*.tsx"],
+	"include": ["**/*.ts", "**/*.tsx", "**/*.jsx"],
 	"exclude": ["node_modules", "studio"],
 	"compilerOptions": {
 		"types": ["astro/client"],
