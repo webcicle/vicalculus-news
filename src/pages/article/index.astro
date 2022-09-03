@@ -1,1 +1,23 @@
-<h1>Hello from the article page</h1>
+---
+import TweetEmbed from '../../components/TweetEmbed.astro';
+
+// const tweet = await fetch(
+// 	'https://api.twitter.com/2/tweets/1565686208994447361?expansions=attachments.media_keys&media.fields=url',
+// 	{
+// 		method: 'GET',
+// 		headers: {
+// 			'Content-type': 'application/json',
+// 			Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAAGeTggEAAAAAmzwEIA%2Bu9RVlYH3yKWOxjWYMrFk%3Dym9SyGgeoT0l0oxaUmIAWRtIeFdFbZ8FuGHCgJKJ05pW8ttsO1`,
+// 		},
+// 	}
+// );
+
+// const response = await tweet.json();
+---
+
+<head>
+	<meta charset='UTF-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+</head>
+
+<TweetEmbed tweetId={'1565686208994447361'} />

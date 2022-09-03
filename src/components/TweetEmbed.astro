@@ -1,0 +1,280 @@
+---
+import { twitterFetch, getTimeFormat, formatTweetText } from '../lib/helpers';
+import TweetMedia from './TweetMedia.astro';
+
+// const { tweetId } = Astro.props;
+
+const tweetId = '1566061842216132609';
+
+const { data: tweet, includes: tweetMedia } = await twitterFetch(
+	`https://api.twitter.com/2/tweets/${tweetId}?tweet.fields=author_id,created_at,in_reply_to_user_id,referenced_tweets&expansions=attachments.media_keys&media.fields=url,preview_image_url,variants`
+);
+const { data: user } = await twitterFetch(
+	`https://api.twitter.com/2/users/${tweet.author_id}?user.fields=profile_image_url,url,verified,description,public_metrics`
+);
+
+const referencedTweet = tweet.referenced_tweets
+	? await twitterFetch(
+			`https://api.twitter.com/2/tweets/${tweet.referenced_tweets[0].id}?tweet.fields=author_id,created_at,in_reply_to_user_id,referenced_tweets&expansions=attachments.media_keys&media.fields=url,preview_image_url,variants`
+	  )
+	: null;
+
+const referencedTweetUser = referencedTweet
+	? await twitterFetch(
+			`https://api.twitter.com/2/users/${referencedTweet.data.author_id}?user.fields=profile_image_url,url,verified,description,public_metrics`
+	  )
+	: null;
+
+console.log(referencedTweet);
+
+export interface Variant {
+	content_type: string;
+	url: string;
+	bit_rate?: number;
+}
+
+export interface Media {
+	media_key: string;
+	type: string;
+	url: string;
+	variants: Variant[];
+}
+---
+
+<div class='tweet'>
+	<div class='tweet-header'>
+		<img
+			class='tweet-profile-picture'
+			src={user.profile_image_url}
+			alt={`Twitter profile picture of ${user.username}`}
+		/>
+		<div class='tweet-profile'>
+			<a
+				href={`https://twitter.com/${user.username}/status/${tweetId}`}
+				class='tweet-name'
+				target='_blank'
+				>{user.name}
+			</a>
+			<p class='tweet-username'>@{user.username}</p>
+
+			<div class='tweet-user-modal'>
+				<div class='tweet-header modal-tweet-header'>
+					<img
+						class='tweet-profile-picture modal-tweet-profile-picture'
+						src={user.profile_image_url}
+						alt={`Twitter profile picture of ${user.username}`}
+					/>
+					<div class='tweet-profile modal-tweet-profile'>
+						<a
+							href={`https://twitter.com/${user.username}/status/${tweetId}`}
+							class='tweet-name modal-tweet-name'
+							target='_blank'
+							>{user.name}
+						</a>
+						<p class='tweet-username modal-tweet-username'>@{user.username}</p>
+						<p class='tweet-username modal-tweet-description'>
+							{user.description}
+						</p>
+						<div class='user-stats'>
+							<span class='stat-number'
+								>{user.public_metrics.following_count}
+							</span>
+							<span class='stat-headline'>Following</span>
+							<span class='stat-number'
+								>{user.public_metrics.followers_count}
+							</span>
+							<span class='stat-headline'>Followers</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			{}
+		</div>
+	</div>
+	<div class='tweet-content'>
+		<p class='tweet-text'>{formatTweetText(tweet.text)}</p>
+		{tweetMedia?.media?.length > 0 && <TweetMedia tweetMedia={tweetMedia} />}
+		{
+			tweet?.referenced_tweets && referencedTweet != null && (
+				<div class='tweet small'>
+					<div class='tweet-header'>
+						<img
+							class='tweet-profile-picture'
+							src={referencedTweetUser.data.profile_image_url}
+							alt={`Twitter profile picture of ${referencedTweetUser.data.username}`}
+						/>
+						<div class='tweet-profile'>
+							<a
+								href={`https://twitter.com/${referencedTweetUser.data.username}/status/${referencedTweet.data.id}`}
+								class='tweet-name'
+								target='_blank'>
+								{referencedTweetUser.data.name}
+							</a>
+							<div class='date-username-container'>
+								<p class='tweet-username'>
+									@{referencedTweetUser.data.username}
+								</p>
+								<div class='date-time-small'>
+									<p class='date-time-p-small'>
+										{getTimeFormat(tweet.created_at)}
+									</p>
+									<p class='date-time-p-small'>
+										{new Date(tweet.created_at).toDateString()}
+									</p>
+								</div>
+							</div>
+
+							<div class='tweet-user-modal'>
+								<div class='tweet-header modal-tweet-header'>
+									<img
+										class='tweet-profile-picture modal-tweet-profile-picture'
+										src={referencedTweetUser.data.profile_image_url}
+										alt={`Twitter profile picture of ${referencedTweetUser.data.username}`}
+									/>
+									<div class='tweet-profile modal-tweet-profile'>
+										<a
+											href={`https://twitter.com/${referencedTweetUser.data.username}/status/${tweetId}`}
+											class='tweet-name modal-tweet-name'
+											target='_blank'>
+											{referencedTweetUser.data.name}
+										</a>
+										<p class='tweet-username modal-tweet-username'>
+											@{referencedTweetUser.data.username}
+										</p>
+										<p class='tweet-username modal-tweet-description'>
+											{referencedTweetUser.data.description}
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p class='tweet-text'>{formatTweetText(referencedTweet.data.text)}</p>
+					{referencedTweet.includes?.media?.length > 0 && (
+						<TweetMedia tweetMedia={referencedTweet.includes} />
+					)}
+				</div>
+			)
+		}
+	</div>
+	<div class='date-time'>
+		<p>{getTimeFormat(tweet.created_at)}</p>
+		<p>{new Date(tweet.created_at).toDateString()}</p>
+	</div>
+</div>
+
+<style>
+	.tweet {
+		width: clamp(10px, 100%, 500px);
+		padding: 1rem;
+		border: 1px solid rgba(128, 128, 128, 0.262);
+		border-radius: 1rem;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+			Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+			sans-serif;
+		font-size: 0.9em;
+		box-sizing: border-box;
+	}
+
+	.tweet-content {
+		max-height: 50vh;
+		overflow: scroll;
+	}
+
+	.tweet .small {
+		width: clamp(10px, 95%, 480px);
+		font-size: 0.8em;
+	}
+
+	.tweet-header {
+		display: grid;
+		grid-template-columns: min-content 1fr;
+		width: 100%;
+		gap: 0.5rem;
+		position: relative;
+	}
+
+	.tweet-user-modal {
+		background-color: white;
+		position: absolute;
+		top: 1rem;
+		box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+		padding: 1em;
+		border-radius: 1rem;
+		visibility: hidden;
+		display: none;
+		z-index: 22;
+	}
+
+	.user-stats {
+		margin-block: 0.3em;
+		display: flex;
+		gap: 0.4em;
+	}
+
+	.stat-headline {
+		color: var(--color-text);
+	}
+
+	.tweet-profile-picture {
+		aspect-ratio: 1/1;
+		border-radius: 50%;
+	}
+	.tweet-profile {
+		display: flex;
+		flex-direction: column;
+		row-gap: 0.2rem;
+		font-size: 0.9em;
+	}
+
+	.tweet-name {
+		margin: 0;
+		cursor: pointer;
+		color: black;
+		font-weight: bold;
+		width: clamp(50%, max-content, 100%);
+		word-wrap: break-word;
+	}
+
+	.tweet-name:hover {
+		color: #1da1f2;
+	}
+
+	.tweet-profile:hover .tweet-user-modal {
+		display: block;
+		visibility: visible;
+	}
+
+	.tweet-username {
+		margin: 0;
+	}
+
+	.tweet-img {
+		border-radius: 1rem;
+		width: 100%;
+	}
+
+	.tweet-text {
+	}
+
+	.date-username-container {
+		display: flex;
+		align-items: center;
+		gap: 0.3em;
+		margin-top: 0.4em;
+	}
+
+	.date-time {
+		display: flex;
+		gap: 1em;
+	}
+
+	.date-time-small {
+		display: flex;
+		gap: 0.3em;
+	}
+
+	.date-time-p-small {
+		margin: 0;
+	}
+</style>

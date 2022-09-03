@@ -1,0 +1,47 @@
+---
+import type { Media } from './TweetEmbed.astro';
+const { tweetMedia } = Astro.props;
+
+const innerWidth = 400;
+
+const getVideo = (media: Media) => {
+	return media.variants.filter((v) => {
+		if (innerWidth < 720 && v.bit_rate! > 632000) return v;
+		if (innerWidth > 720 && innerWidth < 1180 && v.bit_rate! > 950000) return v;
+		if (innerWidth > 1180 && v.bit_rate! > 2176000) return v;
+	})[0];
+};
+
+console.log(tweetMedia);
+---
+
+{
+	tweetMedia.media.map((media: Media) => {
+		if (media.type === 'photo')
+			return <img class='tweet-img' src={media.url} />;
+		if (media.type === 'video')
+			return (
+				<video controls class='tweet-video'>
+					<source
+						src={getVideo(media).url}
+						type={getVideo(media).content_type}
+					/>
+				</video>
+			);
+
+		return;
+	})
+}
+
+<style>
+	.tweet-img {
+		width: 100%;
+		border-radius: 1rem;
+	}
+	.tweet-video {
+		width: 100%;
+		border-radius: 1rem;
+		aspect-ratio: 16/9;
+		background-color: black;
+	}
+</style>
