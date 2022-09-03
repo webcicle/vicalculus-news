@@ -9,9 +9,11 @@ const tweetId = '1566061842216132609';
 const { data: tweet, includes: tweetMedia } = await twitterFetch(
 	`https://api.twitter.com/2/tweets/${tweetId}?tweet.fields=author_id,created_at,in_reply_to_user_id,referenced_tweets&expansions=attachments.media_keys&media.fields=url,preview_image_url,variants`
 );
-const { data: user } = await twitterFetch(
-	`https://api.twitter.com/2/users/${tweet.author_id}?user.fields=profile_image_url,url,verified,description,public_metrics`
-);
+const { data: user } =
+	tweet.author_id &&
+	(await twitterFetch(
+		`https://api.twitter.com/2/users/${tweet.author_id}?user.fields=profile_image_url,url,verified,description,public_metrics`
+	));
 
 const referencedTweet = tweet.referenced_tweets
 	? await twitterFetch(
@@ -19,13 +21,12 @@ const referencedTweet = tweet.referenced_tweets
 	  )
 	: null;
 
-const referencedTweetUser = referencedTweet
-	? await twitterFetch(
-			`https://api.twitter.com/2/users/${referencedTweet.data.author_id}?user.fields=profile_image_url,url,verified,description,public_metrics`
-	  )
-	: null;
-
-console.log(referencedTweet);
+const referencedTweetUser =
+	referencedTweet && referencedTweet.data.author_id
+		? await twitterFetch(
+				`https://api.twitter.com/2/users/${referencedTweet.data.author_id}?user.fields=profile_image_url,url,verified,description,public_metrics`
+		  )
+		: null;
 
 export interface Variant {
 	content_type: string;
