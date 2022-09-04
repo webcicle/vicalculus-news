@@ -1,10 +1,15 @@
 ---
-import { twitterFetch, getTimeFormat, formatTweetText } from '../lib/helpers';
+import {
+	twitterFetch,
+	getTimeFormat,
+	formatTweetText,
+	getTweetId,
+} from '../lib/helpers';
 import TweetMedia from './TweetMedia.astro';
 
-// const { tweetId } = Astro.props;
+const { node } = Astro.props;
 
-const tweetId = '1566061842216132609';
+const tweetId = getTweetId(node.url);
 
 const { data: tweet, includes: tweetMedia } = await twitterFetch(
 	`https://api.twitter.com/2/tweets/${tweetId}?tweet.fields=author_id,created_at,in_reply_to_user_id,referenced_tweets&expansions=attachments.media_keys&media.fields=url,preview_image_url,variants`
@@ -159,8 +164,8 @@ export interface Media {
 		}
 	</div>
 	<div class='date-time'>
-		<p>{getTimeFormat(tweet.created_at)}</p>
-		<p>{new Date(tweet.created_at).toDateString()}</p>
+		<p class='time'>{getTimeFormat(tweet.created_at)}</p>
+		<p class='date'>{new Date(tweet.created_at).toDateString()}</p>
 	</div>
 </div>
 
@@ -175,11 +180,24 @@ export interface Media {
 			sans-serif;
 		font-size: 0.9em;
 		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		background-color: var(--color-white);
+		margin-block: 1rem;
 	}
 
 	.tweet-content {
 		max-height: 50vh;
 		overflow: scroll;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		scrollbar-width: none;
+	}
+
+	.tweet-content::-webkit-scrollbar {
+		width: 0;
 	}
 
 	.tweet .small {
@@ -199,7 +217,7 @@ export interface Media {
 		background-color: white;
 		position: absolute;
 		top: 1rem;
-		box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+		box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 		padding: 1em;
 		border-radius: 1rem;
 		visibility: hidden;
@@ -262,12 +280,18 @@ export interface Media {
 		display: flex;
 		align-items: center;
 		gap: 0.3em;
-		margin-top: 0.4em;
 	}
 
 	.date-time {
 		display: flex;
 		gap: 1em;
+	}
+
+	.date {
+		color: rgb(106, 106, 106);
+	}
+	.time {
+		color: rgb(106, 106, 106);
 	}
 
 	.date-time-small {

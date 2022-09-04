@@ -6,10 +6,12 @@ import HeadingThree from '../components/block-components/ArticleHeadingThree.ast
 import HeadingFour from '../components/block-components/ArticleHeadingFour.astro';
 import Paragraph from '../components/block-components/ArticleParagraph.astro';
 import BlockQuote from '../components/block-components/ArticleBlockQuote.astro';
+import TweetEmbed from '../components/TweetEmbed.astro';
 
 const myPortableTextComponents = {
 	type: {
 		image: ArticleImage,
+		twitter: TweetEmbed,
 	},
 	block: {
 		h1: HeadingOne,

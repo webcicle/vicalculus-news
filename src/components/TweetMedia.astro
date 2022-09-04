@@ -11,8 +11,6 @@ const getVideo = (media: Media) => {
 		if (innerWidth > 1180 && v.bit_rate! > 2176000) return v;
 	})[0];
 };
-
-console.log(tweetMedia);
 ---
 
 {
@@ -43,5 +41,6 @@ console.log(tweetMedia);
 		border-radius: 1rem;
 		aspect-ratio: 16/9;
 		background-color: black;
+		cursor: pointer;
 	}
 </style>

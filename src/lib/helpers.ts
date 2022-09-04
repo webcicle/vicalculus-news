@@ -22,3 +22,8 @@ export const formatTweetText = (tweet: string) => {
 	}
 	return split.join(' ');
 };
+
+export const getTweetId = (url: string) => {
+	if (!url.startsWith('http') && !url.startsWith('www')) return url;
+	return url.split('/').pop()?.split('?')[0];
+};
