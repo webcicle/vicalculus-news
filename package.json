@@ -1,5 +1,5 @@
 {
-	"name": "@example/basics",
+	"name": "vicalculus-news",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -14,9 +14,7 @@
 		"@types/node": "^18.7.14",
 		"@types/react": "^18.0.18",
 		"@types/vhtml": "^2.2.4",
-		"astro": "^1.1.1",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"astro": "^1.1.1"
 	},
 	"dependencies": {
 		"@astrojs/vercel": "^1.0.2",
@@ -24,11 +22,8 @@
 		"@sanity/client": "^3.3.6",
 		"@sanity/image-url": "^1.0.1",
 		"astro-portabletext": "^0.3.0",
-		"get-youtube-id": "^1.0.1",
 		"groq": "^2.29.3",
 		"htm": "^3.1.1",
-		"react-player": "^2.10.1",
-		"react-youtube": "^9.0.3",
 		"vhtml": "^2.2.0"
 	}
 }
