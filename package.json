@@ -19,7 +19,6 @@
 		"react-dom": "^18.2.0"
 	},
 	"dependencies": {
-		"@astrojs/image": "^0.3.6",
 		"@astrojs/vercel": "^1.0.2",
 		"@portabletext/types": "^1.0.3",
 		"@sanity/client": "^3.3.6",
