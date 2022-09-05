@@ -1,8 +1,38 @@
 ---
+import Layout from '../../layouts/Layout.astro';
+import client from '../../client/sanity';
+import groq from 'groq';
+import ArticlePreview from '../../components/ArticlePreview.astro';
+
+const postQuery = groq`*[_type == 'post' && !(_id in path('drafts.**'))]{
+  publishedAt,
+  summary,
+  _id,
+  "author": author->name,
+  "categories": categories[]->title,
+  "mainImg": mainImage,
+  "slug": slug.current,
+  title,
+}`;
+const posts = await client.fetch(postQuery);
+
+const articlePageMetaData = {
+	meta_description: 'News, opinions, and articles focusing on the West',
+	meta_title: 'Vicalculus News',
+	og_description: 'News, opinions, and articles focusing on the West',
+	og_image: posts[0].mainImg,
+	og_title: 'Vicalculus News - F*CK MSM',
+	og_type: 'article',
+};
 ---
 
-<head>
-	<meta charset='UTF-8' />
-	<meta name='viewport' content='width=device-width, initial-scale=1.0' />
-</head>
-<h1>Article Page</h1>
+<Layout
+	title='Vicalculus News - Mostly opinions'
+	metaData={articlePageMetaData}
+>
+	{
+		posts.map((post: any) => {
+			return <ArticlePreview post={post} />;
+		})
+	}
+</Layout>

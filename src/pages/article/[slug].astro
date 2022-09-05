@@ -26,39 +26,9 @@ interface SinglePostProps {
 	og_type: string;
 }
 
-// export async function getStaticPaths() {
-// 	const slugsQuery = groq`*[_type == 'post'] {
-//       publishedAt,
-//       _id,
-//       "author": author->name,
-//       "categories": categories[]->title,
-//       "mainImg": mainImage,
-//       "slug": slug.current,
-//       title,
-//       body,
-//       meta_description,
-//       meta_title,
-//       og_description,
-//       og_image,
-//       og_title,
-//       og_type,
-//    }`;
-
-// 	const postsWithSlugs = await client.fetch(slugsQuery);
-
-// 	const slugArray = postsWithSlugs.map((post: SinglePostProps) => {
-// 		return {
-// 			params: { slug: post.slug },
-// 			props: { post },
-// 		};
-// 	});
-
-// 	return slugArray;
-// }
-
 const { params } = Astro;
 
-const slugsQuery = groq`*[_type == 'post' && slug.current == $slug] {
+const slugsQuery = groq`*[_type == 'post' && slug.current == $slug && !(_id in path('drafts.**'))] {
       publishedAt,
       _id,
       "author": author->name,
