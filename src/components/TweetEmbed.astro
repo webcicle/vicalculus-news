@@ -44,6 +44,7 @@ export interface Media {
 	type: string;
 	url: string;
 	variants: Variant[];
+	preview_image_url: string;
 }
 ---
 
@@ -66,6 +67,9 @@ export interface Media {
 			<div class='tweet-user-modal'>
 				<div class='tweet-header modal-tweet-header'>
 					<img
+						width='48'
+						height='48'
+						loading='lazy'
 						class='tweet-profile-picture modal-tweet-profile-picture'
 						src={user.profile_image_url}
 						alt={`Twitter profile picture of ${user.username}`}
@@ -105,6 +109,9 @@ export interface Media {
 				<div class='tweet small'>
 					<div class='tweet-header'>
 						<img
+							loading='lazy'
+							width='48'
+							height='48'
 							class='tweet-profile-picture'
 							src={referencedTweetUser.data.profile_image_url}
 							alt={`Twitter profile picture of ${referencedTweetUser.data.username}`}

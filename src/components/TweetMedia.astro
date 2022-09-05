@@ -16,10 +16,14 @@ const getVideo = (media: Media) => {
 {
 	tweetMedia.media.map((media: Media) => {
 		if (media.type === 'photo')
-			return <img class='tweet-img' src={media.url} />;
+			return <img loading='lazy' class='tweet-img' src={media.url} />;
 		if (media.type === 'video')
 			return (
-				<video controls class='tweet-video'>
+				<video
+					controls
+					class='tweet-video'
+					poster={media.preview_image_url}
+					preload='none'>
 					<source
 						src={getVideo(media).url}
 						type={getVideo(media).content_type}
