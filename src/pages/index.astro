@@ -4,7 +4,7 @@ import client from '../client/sanity';
 import groq from 'groq';
 import ArticlePreview from '../components/ArticlePreview.astro';
 
-const postQuery = groq`*[_type == 'post' && !(_id in path('drafts.**'))]{
+const postQuery = groq`*[_type == 'article' && !(_id in path('drafts.**')) && dateTime(publishedAt) < dateTime(now())]{
   publishedAt,
   summary,
   _id,
@@ -13,7 +13,8 @@ const postQuery = groq`*[_type == 'post' && !(_id in path('drafts.**'))]{
   "mainImg": mainImage,
   "slug": slug.current,
   title,
-}`;
+} | order(publishedAt desc)`;
+
 const posts = await client.fetch(postQuery);
 
 const frontPageMetaData = {
@@ -21,7 +22,7 @@ const frontPageMetaData = {
 	meta_title: 'Vicalculus News',
 	og_description: 'News, opinions, and articles focusing on the West',
 	og_image: posts[0].mainImg,
-	og_title: 'Vicalculus News - F*CK MSM',
+	og_title: 'Vicalculus News - Real news, but mostly opinionated',
 	og_type: 'article',
 };
 ---

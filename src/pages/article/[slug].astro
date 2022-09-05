@@ -28,7 +28,7 @@ interface SinglePostProps {
 
 const { params } = Astro;
 
-const slugsQuery = groq`*[_type == 'post' && slug.current == $slug && !(_id in path('drafts.**'))] {
+const slugsQuery = groq`*[_type == 'article' && slug.current == $slug && !(_id in path('drafts.**'))] {
       publishedAt,
       _id,
       "author": author->name,
