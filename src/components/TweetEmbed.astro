@@ -7,7 +7,15 @@ import {
 } from '../lib/helpers';
 import TweetMedia from './TweetMedia.astro';
 
-const { node } = Astro.props;
+interface Props {
+	node: {
+		_key: string;
+		_type: string;
+		url: string;
+	};
+}
+
+const { node } = Astro.props as Props;
 
 const tweetId = getTweetId(node.url);
 

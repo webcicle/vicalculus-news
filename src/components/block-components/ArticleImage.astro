@@ -1,7 +1,17 @@
 ---
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types';
 import { urlFor } from '../../client/builders';
 
-const { astroClass, node } = Astro.props;
+interface NodeObject extends SanityImageObject {
+	altText: string;
+	caption: string;
+}
+interface Props {
+	astroClass: string;
+	node: NodeObject;
+}
+
+const { astroClass, node } = Astro.props as Props;
 ---
 
 <div class='img-container'>

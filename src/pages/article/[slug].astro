@@ -18,6 +18,12 @@ interface SinglePostProps {
 	slug: string;
 	title: string;
 	body: SanityAssetDocument;
+	meta_description: string;
+	meta_title: string;
+	og_description: string;
+	og_image: SanityImageObject;
+	og_title: string;
+	og_type: string;
 }
 
 export async function getStaticPaths() {
@@ -50,6 +56,12 @@ export async function getStaticPaths() {
 	return slugArray;
 }
 
+interface Props {
+	post: SinglePostProps;
+}
+
+const { post } = Astro.props as Props;
+
 const {
 	publishedAt,
 	author,
@@ -64,7 +76,7 @@ const {
 	og_image,
 	og_title,
 	og_type,
-} = Astro.props.post;
+} = post;
 ---
 
 <Layout
@@ -74,7 +86,7 @@ const {
 		meta_description,
 		meta_title,
 		og_description,
-		og_image: og_image ?? mainImg,
+		og_image: mainImg,
 		og_title,
 		og_type,
 	}}

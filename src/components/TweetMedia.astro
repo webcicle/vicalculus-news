@@ -1,6 +1,13 @@
 ---
 import type { Media } from './TweetEmbed.astro';
-const { tweetMedia } = Astro.props;
+
+interface Props {
+	tweetMedia: {
+		media: Media[];
+	};
+}
+
+const { tweetMedia } = Astro.props as Props;
 
 const innerWidth = 400;
 

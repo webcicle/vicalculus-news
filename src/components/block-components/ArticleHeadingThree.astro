@@ -1,5 +1,9 @@
 ---
-const { astroClass } = Astro.props;
+interface Props {
+	astroClass: string;
+}
+
+const { astroClass } = Astro.props as Props;
 ---
 
 <h3 class={`heading-three ${astroClass}`}><slot /></h3>
