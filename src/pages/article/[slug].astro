@@ -5,7 +5,7 @@ import groq from 'groq';
 import { urlFor } from '../../client/builders';
 import client from '../../client/sanity';
 import ArticleInfo from '../../components/ArticleInfo.astro';
-import Layout from '../../layouts/Layout.astro';
+import Layout, { MetaData } from '../../layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
 import myPortableTextComponents from '../../client/htmlComponents';
 
@@ -26,8 +26,39 @@ interface SinglePostProps {
 	og_type: string;
 }
 
-export async function getStaticPaths() {
-	const slugsQuery = groq`*[_type == 'post'] {
+// export async function getStaticPaths() {
+// 	const slugsQuery = groq`*[_type == 'post'] {
+//       publishedAt,
+//       _id,
+//       "author": author->name,
+//       "categories": categories[]->title,
+//       "mainImg": mainImage,
+//       "slug": slug.current,
+//       title,
+//       body,
+//       meta_description,
+//       meta_title,
+//       og_description,
+//       og_image,
+//       og_title,
+//       og_type,
+//    }`;
+
+// 	const postsWithSlugs = await client.fetch(slugsQuery);
+
+// 	const slugArray = postsWithSlugs.map((post: SinglePostProps) => {
+// 		return {
+// 			params: { slug: post.slug },
+// 			props: { post },
+// 		};
+// 	});
+
+// 	return slugArray;
+// }
+
+const { params } = Astro;
+
+const slugsQuery = groq`*[_type == 'post' && slug.current == $slug] {
       publishedAt,
       _id,
       "author": author->name,
@@ -44,30 +75,17 @@ export async function getStaticPaths() {
       og_type,
    }`;
 
-	const postsWithSlugs = await client.fetch(slugsQuery);
-
-	const slugArray = postsWithSlugs.map((post: SinglePostProps) => {
-		return {
-			params: { slug: post.slug },
-			props: { post },
-		};
-	});
-
-	return slugArray;
-}
+const post = await client.fetch(slugsQuery, { slug: params.slug });
 
 interface Props {
 	post: SinglePostProps;
 }
-
-const { post } = Astro.props as Props;
 
 const {
 	publishedAt,
 	author,
 	categories,
 	mainImg,
-	slug,
 	title,
 	body,
 	meta_description,
@@ -76,20 +94,20 @@ const {
 	og_image,
 	og_title,
 	og_type,
-} = post;
+} = post[0] as SinglePostProps;
 ---
 
 <Layout
 	title={`${title} | Vicalculus News` ?? 'Vicalculus News'}
-	slug={slug}
+	slug={params.slug as string}
 	metaData={{
-		meta_description,
+		meta_description: meta_description,
 		meta_title,
 		og_description,
 		og_image: mainImg,
 		og_title,
 		og_type,
-	}}
+	} as MetaData}
 >
 	<img
 		class='main-img'
