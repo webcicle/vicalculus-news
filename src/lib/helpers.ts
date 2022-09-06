@@ -10,9 +10,20 @@ export const twitterFetch = async (url: string) => {
 };
 
 export const getTimeFormat = (date: string) => {
-	const timeArray = new Date(date).toLocaleTimeString().split(':');
+	const timeArray = new Date(date).toLocaleTimeString('en-US').split(':');
 	const amPm = timeArray[2].split(' ')[1];
 	return `${timeArray[0]}:${timeArray[1]} ${amPm}`;
+};
+
+export const getDateFormat = (date: string) => {
+	const dateArray = new Date(date)
+		.toLocaleDateString('en-UK')
+		.split('T')[0]
+		.split('/')
+		.join('-');
+	console.log(dateArray);
+
+	return dateArray;
 };
 
 export const formatTweetText = (tweet: string) => {

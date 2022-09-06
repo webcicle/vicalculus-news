@@ -1,6 +1,7 @@
 import { StateUpdater, useEffect, useState } from 'preact/hooks';
 import type { ChangeEvent, CSSProperties, FormEvent } from 'react';
 import client from '../../client/sanity';
+import { getDateFormat, getTimeFormat } from '../../lib/helpers';
 import useMediaQuery from './useMediaQuery';
 
 export interface Comment {
@@ -85,26 +86,28 @@ export default function Comments({ comments, id }: Props) {
 			marginBottom: '.5em',
 		},
 		commentsForm: {
-			minHeight: '180px',
+			minHeight: '210px',
 			display: hasCommented ? 'grid' : 'block',
 			placeItems: 'center',
+			justifyContent: 'space-between',
 		},
 		formTop: {
 			display: 'flex',
 			flexDirection: isMobile ? 'column' : 'row',
 			justifyContent: 'space-between',
+			columnGap: '1rem',
 		},
 		formInputContainer: {
 			display: 'flex',
 			flexDirection: 'column',
-			width: isMobile ? '100%' : 'max-content',
+			width: '100%',
 			marginBottom: '.4em',
 		},
 		formInputContainerText: {
 			display: 'flex',
 			flexDirection: 'column',
 			width: '100%',
-			marginBottom: '.4em',
+			marginBottom: '.8em',
 		},
 		formInputContainerCheck: {
 			display: 'flex',
@@ -124,6 +127,7 @@ export default function Comments({ comments, id }: Props) {
 		},
 		inputLabel: {
 			fontSize: 'var(--step-0)',
+			marginBottom: '.2em',
 		},
 		formPrompt: {
 			fontSize: 'var(--step--1)',
@@ -134,25 +138,36 @@ export default function Comments({ comments, id }: Props) {
 			textTransform: 'uppercase',
 			fontWeight: 'bold',
 			marginBottom: '.4em',
+			cursor: 'pointer',
 		},
 		commentsContainer: {
 			marginTop: '2rem',
 		},
 		comment: {
-			marginBottom: '1em',
+			marginBottom: '.5em',
+			paddingBottom: '.5em',
 			width: '100%',
 			fontSize: 'var(--step--1)',
+			borderBottom: '1px solid rgba(145, 145, 145, 0.281)',
+		},
+		email: {
+			justifySelf: 'left',
+			color: 'var(--color-text)',
+			cursor: 'pointer',
 		},
 		commentHeader: {
-			display: 'flex',
+			display: 'grid',
+			gridTemplateColumns: '1fr 1fr 1fr',
 			flexDirection: isMobile ? 'column' : 'row',
 			justifyContent: 'space-between',
+			marginBottom: '.8em',
 		},
 		name: {
 			fontWeight: 'bold',
 		},
 		createdAt: {
 			fontStyle: 'italic',
+			gridColumn: '-1 / span1',
 		},
 		commentText: {},
 	};
@@ -192,7 +207,7 @@ export default function Comments({ comments, id }: Props) {
 							</div>
 							<div style={styles.formInputContainerCheck as CSSProperties}>
 								<label htmlFor='private' style={styles.inputLabel}>
-									Show email?
+									Public?
 								</label>
 								<input
 									type='checkbox'
@@ -212,7 +227,6 @@ export default function Comments({ comments, id }: Props) {
 								style={styles.formInput}
 								id='comment'
 								name='comment'
-								height={200}
 								onChange={(e) => handleChange(e, setComment)}
 								value={comment}
 							/>
@@ -245,8 +259,16 @@ export default function Comments({ comments, id }: Props) {
 						<div style={styles.comment}>
 							<div style={styles.commentHeader as CSSProperties}>
 								<p style={styles.name as CSSProperties}>{comment.name}</p>
-								{comment.emailPublic && <p>{comment.email}</p>}
-								<p style={styles.createdAt}>{comment._createdAt}</p>
+								{comment.emailPublic && (
+									<a href={`mailto:${comment.email}`} style={styles.email}>
+										{comment.email}
+									</a>
+								)}
+								<p style={styles.createdAt}>
+									<span>{getTimeFormat(comment._createdAt)}</span>
+									{!isMobile && ', '}
+									<span>{getDateFormat(comment._createdAt)}</span>
+								</p>
 							</div>
 							<p style={styles.commentText}>{comment.comment}</p>
 						</div>
