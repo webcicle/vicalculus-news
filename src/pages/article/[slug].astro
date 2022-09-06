@@ -8,8 +8,7 @@ import ArticleInfo from '../../components/ArticleInfo.astro';
 import Layout, { MetaData } from '../../layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
 import myPortableTextComponents from '../../client/htmlComponents';
-import Comments from '../../components/comments';
-import { log } from 'console';
+import Comments from '../../components/comments/Comments';
 
 interface SinglePostProps {
 	publishedAt: string;
@@ -31,6 +30,7 @@ interface SinglePostProps {
 
 export interface Comment {
 	_id: string;
+	_createdAt: string;
 	approved_by_admin: boolean;
 	comment: string;
 	email: string;
