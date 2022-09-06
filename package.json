@@ -10,10 +10,12 @@
 		"astro": "astro"
 	},
 	"devDependencies": {
+		"@astrojs/preact": "^1.0.2",
 		"@types/node": "^18.7.14",
 		"@types/react": "^18.0.18",
 		"@types/vhtml": "^2.2.4",
-		"astro": "^1.1.1"
+		"astro": "^1.1.1",
+		"preact": "^10.10.6"
 	},
 	"dependencies": {
 		"@astrojs/vercel": "^1.0.2",

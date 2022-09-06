@@ -1,0 +1,40 @@
+---
+import groq from 'groq';
+import client from '../../client/sanity';
+import Layout from '../../layouts/Layout.astro';
+
+const authorQuery = groq`*[_type == 'author' && _id == $id]{
+  "image": image.asset->url,
+  bio,
+  name,
+  "articles": *[_type == 'article' && references(^._id)]{
+  publishedAt,
+  summary,
+  _id,
+  "author": author->name,
+  "categories": categories[]->title,
+  "mainImg": mainImage,
+  "slug": slug.current,
+  title,
+} | order(publishedAt desc),
+}`;
+
+const authorWithArticle = await client.fetch(authorQuery);
+
+const frontPageMetaData = {
+	meta_description: 'News, opinions, and articles focusing on the West',
+	meta_title: 'Vicalculus News',
+	og_description: 'News, opinions, and articles focusing on the West',
+	og_image: authorWithArticle[0].mainImg,
+	og_title: 'Vicalculus News - Real news, but mostly opinionated',
+	og_type: 'article',
+};
+---
+
+<Layout title='Vicalculus News - Mostly opinions' metaData={frontPageMetaData}>
+	<!-- {
+		posts.map((post: any) => {
+			return <ArticlePreview post={post} />;
+		})
+	} -->
+</Layout>

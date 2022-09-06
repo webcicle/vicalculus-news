@@ -1,6 +1,11 @@
 ---
 interface Props {
-	props: { publishedAt: string; author: string; categories: string[] };
+	props: {
+		publishedAt: string;
+		author: string;
+		categories: string[];
+	};
+	small?: boolean;
 }
 
 const { props } = Astro.props as Props;

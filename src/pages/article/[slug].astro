@@ -8,6 +8,8 @@ import ArticleInfo from '../../components/ArticleInfo.astro';
 import Layout, { MetaData } from '../../layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
 import myPortableTextComponents from '../../client/htmlComponents';
+import Comments from '../../components/comments';
+import { log } from 'console';
 
 interface SinglePostProps {
 	publishedAt: string;
@@ -24,6 +26,16 @@ interface SinglePostProps {
 	og_image: SanityImageObject;
 	og_title: string;
 	og_type: string;
+	comments: Comment[];
+}
+
+export interface Comment {
+	_id: string;
+	approved_by_admin: boolean;
+	comment: string;
+	email: string;
+	name: string;
+	emailPublic: boolean;
 }
 
 const { params } = Astro;
@@ -35,6 +47,15 @@ const slugsQuery = groq`*[_type == 'article' && slug.current == $slug && !(_id i
       "categories": categories[]->title,
       "mainImg": mainImage,
       "slug": slug.current,
+      "comments": *[_type == "comment" && references(^._id) && approved_by_admin == true]{
+      _createdAt,
+  _id,
+  approved_by_admin,
+  comment,
+  email,
+  name,
+  emailPublic
+} | order(_createdAt desc),
       title,
       body,
       meta_description,
@@ -46,6 +67,15 @@ const slugsQuery = groq`*[_type == 'article' && slug.current == $slug && !(_id i
    }`;
 
 const post = await client.fetch(slugsQuery, { slug: params.slug });
+
+// const dataFetch = await fetch('/articleFetch', {
+// 	method: 'POST',
+// 	body: JSON.stringify({ slug: params.slug }),
+// });
+
+// const newPost = await dataFetch.json();
+
+// console.log(dataFetch);
 
 interface Props {
 	post: SinglePostProps;
@@ -64,6 +94,8 @@ const {
 	og_image,
 	og_title,
 	og_type,
+	comments,
+	_id,
 } = post[0] as SinglePostProps;
 ---
 
@@ -90,6 +122,7 @@ const {
 	<ArticleInfo props={{ publishedAt, author, categories }} />
 	<div class={`content-center`}>
 		<PortableText value={body} components={myPortableTextComponents} />
+		<Comments client:visible comments={comments} id={_id} />
 	</div>
 </Layout>
 
