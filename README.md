@@ -4,8 +4,8 @@ VICALCULUS NEWS
 **\_\***---**\*\_**
 
 Todo:
-[ ]Comment section with Preact (Remove React)
-[ ]SSR
+[X]Comment section with Preact (Remove React)
+[X]SSR
 [ ]YouTube Embed
 [ ]Link live preview
 [ ]Share functionallity
