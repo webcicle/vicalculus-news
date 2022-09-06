@@ -254,26 +254,33 @@ export default function Comments({ comments, id }: Props) {
 				)}
 			</form>
 			<div style={styles.commentsContainer}>
-				{commentsState.map((comment) => {
-					return (
-						<div style={styles.comment}>
-							<div style={styles.commentHeader as CSSProperties}>
-								<p style={styles.name as CSSProperties}>{comment.name}</p>
-								{comment.emailPublic && (
-									<a href={`mailto:${comment.email}`} style={styles.email}>
-										{comment.email}
-									</a>
-								)}
-								<p style={styles.createdAt}>
-									<span>{getTimeFormat(comment._createdAt)}</span>
-									{!isMobile && ', '}
-									<span>{getDateFormat(comment._createdAt)}</span>
-								</p>
+				{comments.length > 0 ? (
+					commentsState.map((comment) => {
+						return (
+							<div style={styles.comment}>
+								<div style={styles.commentHeader as CSSProperties}>
+									<p style={styles.name as CSSProperties}>{comment.name}</p>
+									{comment.emailPublic && (
+										<a href={`mailto:${comment.email}`} style={styles.email}>
+											{comment.email}
+										</a>
+									)}
+									<p style={styles.createdAt}>
+										<span>{getTimeFormat(comment._createdAt)}</span>
+										{!isMobile && ', '}
+										<span>{getDateFormat(comment._createdAt)}</span>
+									</p>
+								</div>
+								<p style={styles.commentText}>{comment.comment}</p>
 							</div>
-							<p style={styles.commentText}>{comment.comment}</p>
-						</div>
-					);
-				})}
+						);
+					})
+				) : (
+					<p style={styles.formPrompt}>
+						No one has commented on this post yet. Be the first one, by entering
+						your opinion above.
+					</p>
+				)}
 			</div>
 		</div>
 	);
