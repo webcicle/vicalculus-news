@@ -1,6 +1,96 @@
+---
+import styles from '../styles/globals.css';
+---
+
 <head>
-	<meta
+	<!-- <meta
 		http-equiv='refresh'
-		content='delay_time; URL=https://vicalculus-news-sanity-studio.vercel.app/'
-	/>
+		content='delay_time=2; URL=https://vicalculus-news-sanity-studio.vercel.app/'
+	/> -->
 </head>
+
+<div class='container'>
+	<h1 class='title'>
+		Redirecting
+		<span class='oneDot'>.</span>
+		<span class='twoDot'>.</span>
+		<span class='threeDot'>.</span>
+	</h1>
+	<p class='text'>...you to the admin page</p>
+	<p class='text'>
+		If you are not redirected automatically <a
+			class='link'
+			href='https://vicalculus-news-sanity-studio.vercel.app/'>click here</a
+		>
+	</p>
+</div>
+
+<style>
+	.container {
+		padding: 1rem;
+	}
+	.title {
+		font-family: var(--main-font);
+	}
+
+	.link {
+		color: var(--color-text);
+		cursor: pointer;
+	}
+
+	.link:hover {
+		color: var(--color-quote);
+	}
+	@keyframes dotAnimationOne {
+		from {
+			visibility: hidden;
+		}
+		25% {
+			visibility: visible;
+		}
+	}
+	@keyframes dotAnimationTwo {
+		from {
+			visibility: hidden;
+		}
+		50% {
+			visibility: visible;
+		}
+	}
+	@keyframes dotAnimationThree {
+		from {
+			visibility: hidden;
+		}
+		75% {
+			visibility: visible;
+		}
+		100% {
+			visibility: hidden;
+		}
+	}
+
+	.oneDot {
+		animation-name: dotAnimationOne;
+		animation-duration: 3s;
+		animation-timing-function: linear;
+		animation-direction: normal;
+		animation-iteration-count: infinite;
+		visibility: hidden;
+	}
+	.twoDot {
+		animation-name: dotAnimationTwo;
+		animation-duration: 3s;
+		animation-timing-function: linear;
+		animation-direction: normal;
+		animation-iteration-count: infinite;
+		visibility: hidden;
+	}
+	.threeDot {
+		animation-name: dotAnimationThree;
+		animation-duration: 3s;
+		animation-timing-function: linear;
+		animation-direction: normal;
+		animation-iteration-count: infinite;
+		visibility: hidden;
+	}
+</style>
