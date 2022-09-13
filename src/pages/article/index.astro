@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import client from '../../client/sanity';
 import groq from 'groq';
 import ArticlePreview from '../../components/ArticlePreview.astro';
+import { mainInfo } from '../../fixtures/site-content';
 
 const postQuery = groq`*[_type == 'article' && !(_id in path('drafts.**')) && dateTime(publishedAt) < dateTime(now())]{
   publishedAt,
@@ -19,16 +20,16 @@ const posts = await client.fetch(postQuery);
 
 const articlePageMetaData = {
 	meta_description: 'News, opinions, and articles focusing on the West',
-	meta_title: 'Vicalculus News',
+	meta_title: mainInfo.title,
 	og_description: 'News, opinions, and articles focusing on the West',
 	og_image: posts[0].mainImg,
-	og_title: 'Vicalculus News - F*CK MSM',
+	og_title: `${mainInfo.title}`,
 	og_type: 'article',
 };
 ---
 
 <Layout
-	title='Vicalculus News - Mostly opinions'
+	title={`${mainInfo.title} - Mostly opinions`}
 	metaData={articlePageMetaData}
 >
 	{

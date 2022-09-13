@@ -9,6 +9,7 @@ import Layout, { MetaData } from '../../layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
 import myPortableTextComponents from '../../client/htmlComponents';
 import Comments from '../../components/comments/Comments';
+import { mainInfo } from '../../fixtures/site-content';
 
 interface SinglePostProps {
 	publishedAt: string;
@@ -91,7 +92,7 @@ const {
 ---
 
 <Layout
-	title={`${title} | Vicalculus News` ?? 'Vicalculus News'}
+	title={`${title} | ${mainInfo.title}` ?? `${mainInfo.title}`}
 	slug={params.slug as string}
 	metaData={{
 		meta_description: meta_description,

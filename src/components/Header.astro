@@ -1,4 +1,5 @@
 ---
+import { mainInfo } from '../fixtures/site-content';
 const MD_SIZE = 400;
 ---
 
@@ -11,7 +12,7 @@ const MD_SIZE = 400;
 				alt=''
 				srcset='/banner/webp/banner-mobile.webp 390w, /banner/webp/banner-tablet.webp 834w, /banner/webp/banner-desktop.webp 1280w, /banner/webp/banner-xl.webp 1920w'
 			/>
-			<p class='banner-title'>vicalculus news</p>
+			<p class='banner-title'>{mainInfo.title}</p>
 		</div>
 		<nav class='navbar'>
 			<div class='flex nav-inner'>
