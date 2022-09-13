@@ -219,7 +219,7 @@ export default function Comments({ comments, id }: Props) {
 							</div>
 						</div>
 						<div style={styles.formInputContainerText as CSSProperties}>
-							<label htmlFor='private' style={styles.inputLabel}>
+							<label htmlFor='comment' style={styles.inputLabel}>
 								Comment
 							</label>
 							<input

@@ -68,15 +68,6 @@ const slugsQuery = groq`*[_type == 'article' && slug.current == $slug && !(_id i
 
 const post = await client.fetch(slugsQuery, { slug: params.slug });
 
-// const dataFetch = await fetch('/articleFetch', {
-// 	method: 'POST',
-// 	body: JSON.stringify({ slug: params.slug }),
-// });
-
-// const newPost = await dataFetch.json();
-
-// console.log(dataFetch);
-
 interface Props {
 	post: SinglePostProps;
 }

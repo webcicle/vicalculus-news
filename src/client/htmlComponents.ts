@@ -1,4 +1,5 @@
 import ArticleImage from '../components/block-components/ArticleImage.astro';
+import ArticleLink from '../components/block-components/ArticleLink.astro';
 
 import HeadingOne from '../components/block-components/ArticleHeadingOne.astro';
 import HeadingTwo from '../components/block-components/ArticleHeadingTwo.astro';
@@ -20,6 +21,9 @@ const myPortableTextComponents = {
 		h4: HeadingFour,
 		blockquote: BlockQuote,
 		normal: Paragraph,
+	},
+	mark: {
+		link: ArticleLink,
 	},
 };
 

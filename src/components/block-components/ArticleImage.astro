@@ -17,7 +17,7 @@ const { astroClass, node } = Astro.props as Props;
 <div class='img-container'>
 	<img
 		class={`article-img ${astroClass}`}
-		src={urlFor(node).quality(75).format('webp').url()}
+		src={urlFor(node).quality(100).format('webp').url()}
 		alt={node.altText ?? `Image related to article (alt text missing, sorry)`}
 		loading='lazy'
 	/>

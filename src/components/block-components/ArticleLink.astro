@@ -1,0 +1,43 @@
+---
+interface NodeProps {
+	_type: string;
+	_key: string;
+	children: [
+		{
+			_type: string;
+			text: string;
+		}
+	];
+	markDef: {
+		_key: string;
+		_type: string;
+		href: string;
+	};
+	markType: string;
+	markKey: string;
+}
+
+interface Props {
+	astroClass: string;
+	node: NodeProps;
+}
+
+const { astroClass, node } = Astro.props as Props;
+console.log(node);
+---
+
+<a href={node.markDef.href} target='_blank' class={`link ${astroClass}`}
+	><slot />
+</a>
+
+<style>
+	.link {
+		color: var(--color-text);
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	.link:hover {
+		color: var(--color-main);
+	}
+</style>
